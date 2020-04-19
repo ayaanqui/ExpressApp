@@ -13,9 +13,9 @@ app.set('views', 'views');
 const path = require("path");
 
 // Import routes
-const admin = require("./routes/admin");
+const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
-const error404Routes = require("./routes/404.js");
+const errors = require('./controllers/errors');
 
 /** Middleware */
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,8 +23,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/admin', admin.routes);
+app.use('/admin', adminRoutes);
 app.use(shopRoutes);
-app.use(error404Routes);
+app.use(errors.get404);
 
 app.listen(3000);
