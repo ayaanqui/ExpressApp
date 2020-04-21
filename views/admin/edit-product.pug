@@ -1,0 +1,39 @@
+extends ../layouts/main-layout.pug
+
+block styles
+  link(rel="stylesheet", href="/css/forms.css")
+  link(rel="stylesheet", href="/css/product.css")
+
+block content
+  if (!editing)
+    - var link = '/add-product';
+  else
+    - var link = '/edit-product';
+
+  form.product-form(action=`/admin${link}`, method="post")
+    .form-control
+      label(for="title") Title
+      input#title(type="text", name="title", value=(editing ? product.title : ''))
+    
+    .form-control
+      label(for="image-url") Image URL
+      input#image-url(type="text", name="imageUrl", value=(editing ? product.imageUrl : ''))
+    
+    .form-control
+      label(for="price") Price
+      input#price(type="number", name="price", step="0.01", value=(editing ? product.price : ''))
+    
+    .form-control
+      label(for="Description") Description
+      textarea#description(name="description", style="height: 100px")
+        if (editing)
+          | #{product.description}
+    
+    if (editing)
+      input(type="hidden", name="id", value=`${product.id}`)
+
+    button.btn(type="submit")
+      if !editing 
+        | Add Product
+      else
+        | Update Product
