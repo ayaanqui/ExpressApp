@@ -9,5 +9,4 @@ block content
     h2 $#{product.price}
     p #{product.description}
 
-    form(action="/cart", method="post")
-      button.btn(type="submit") Add to Cart
+    include ../components/add-to-cart-form
