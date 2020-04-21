@@ -22,5 +22,6 @@ block content
             a.btn(href=`/admin/edit-product/${product.id}?edit=true`) Edit
             form(action="/admin/delete-product", method="POST")
               button.btn(type="submit") Delete
+              input(type="hidden", name="id", value=`${product.id}`)
   else
     h1 No products
