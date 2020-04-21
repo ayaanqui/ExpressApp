@@ -1,4 +1,14 @@
 extends ../layouts/main-layout
 
 block content
-  h1 Your cart is empty
+  if (products.length > 0)
+    ul
+      each product in products
+        li 
+          | #{product.product.title} 
+          b x#{product.qty}
+          form(action="/cart-delete-item", method="post")
+            button.btn(type="submit", style="margin-left: 15px") Delete
+            input(type="hidden", name="id", value=`${product.product.id}`)
+  else
+    h2 Your Cart is empty
