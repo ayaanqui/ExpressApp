@@ -10,6 +10,21 @@ exports.getProducts = (req, res, next) => {
   });
 };
 
+exports.getProduct = (req, res, next) => {
+  const id = req.params.id;
+  Product.find(id, product => {
+    if (!product)
+      next(); // return 404
+    else {
+      res.render('shop/product-detail', {
+        title: product.title,
+        path: `/products/${product.id}`,
+        product: product,
+      });
+    }
+  });
+};
+
 exports.getIndex = (req, res, next) => {
   Product.fetchAll(products => {
     res.render('shop/index', {
