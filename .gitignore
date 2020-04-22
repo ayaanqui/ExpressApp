@@ -1,3 +1,4 @@
 node_modules/
 data/*.json
 util/password.js
+util/cipher.js
