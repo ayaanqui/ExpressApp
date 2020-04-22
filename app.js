@@ -1,9 +1,13 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const app = express();
 
+const bodyParser = require("body-parser");
+
+// MySQL Database
+const db = require('./util/database');
+
 // Pug templating engine
-app.set('view engine', 'pug')
+app.set('view engine', 'pug');
 
 // Tells express where to look for views
 // in our case we look at the directory (default)
