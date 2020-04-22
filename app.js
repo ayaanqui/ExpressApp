@@ -4,7 +4,7 @@ const app = express();
 const bodyParser = require("body-parser");
 
 // MySQL Database
-const db = require('./util/database');
+const sequelize = require('./util/database');
 
 // Pug templating engine
 app.set('view engine', 'pug');
@@ -31,4 +31,9 @@ app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(errors.get404);
 
-app.listen(3000);
+sequelize.sync()
+  .then(res => {
+    console.log('\nServer started at http://localhost:3000/\n\n');
+    app.listen(3000);
+  })
+  .catch(err => console.log(err));
