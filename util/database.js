@@ -1,7 +1,5 @@
 const mysql = require('mysql2');
-const Cipher = require('./cipher');
-
-const password = new Cipher('BDeciaeDJBcF.BDHacDeHceaa.BDJHgggBaDcB.BecFaJiFciii.BeFcFDcaaBaB.ccHgaccHgiiB.DcBaeFaiFeBD.DaHcJFJaJaii.cHHaFgJDaacB.DBcHJFcgFgia.BHFeDgJcgaia.JigDaFcJDDg', 52323).decrypt();
+const password = require('./password');
 
 const pool = mysql.createPool({
   host: 'localhost',
