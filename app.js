@@ -59,6 +59,7 @@ app.use(shopRoutes);
 app.use(errors.get404);
 
 sequelize
+  // .sync({ force: true })
   .sync()
   .then(res => {
     return User.findByPk(1);
@@ -70,6 +71,9 @@ sequelize
     return user;
   })
   .then(user => {
+    return user.createCart();
+  })
+  .then(cart => {
     console.log('\nServer started at http://localhost:3000/\n\n');
     app.listen(3000);
   })
