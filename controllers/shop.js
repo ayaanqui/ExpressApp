@@ -43,7 +43,6 @@ exports.getCart = (req, res, next) => {
     .then(cart => {
       return cart.getProducts()
         .then(products => {
-          console.log(products);
           res.render('shop/cart', {
             title: "Cart",
             path: "/cart",
@@ -57,9 +56,33 @@ exports.getCart = (req, res, next) => {
 
 exports.postCart = (req, res, next) => {
   const id = req.body.id;
-  Product.findByPk(id)
-    .then(product => {
-      Cart.addProduct(id, product.price);
+  let fetchedCart;
+
+  req.user.getCart()
+    .then(cart => {
+      fetchedCart = cart;
+      return cart.getProducts({
+        where: {
+          id: id
+        }
+      });
+    })
+    .then(([product]) => {
+      let quantity = 1;
+      if (product) {
+        // If the product already exists in the cart,
+        // Just increment the quantity of the product
+        // ...
+      }
+      return Product.findByPk(id)
+        .then(product => {
+          return fetchedCart.addProduct(product, {
+            through: { quantity: quantity }
+          });
+        })
+        .catch(err => console.log(err));
+    })
+    .then(() => {
       res.redirect('/cart');
     })
     .catch(err => console.log(err));
