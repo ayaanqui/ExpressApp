@@ -1,14 +1,17 @@
 extends ../layouts/main-layout
 
+block styles
+  link(rel="stylesheet", href="css/cart.css")
+
 block content
   if (products.length > 0)
-    ul
+    ul.cart__item-list
       each product in products
-        li 
-          | #{product.title} 
-          b x#{product.cartItem.quantity}
+        li.cart__item
+          h1 #{product.title} 
+          h2 Quantity: #{product.cartItem.quantity}
           form(action="/cart-delete-item", method="post")
-            button.btn(type="submit", style="margin-left: 15px") Delete
+            button.btn.danger(type="submit", style="margin-left: 15px") Delete
             input(type="hidden", name="id", value=`${product.id}`)
   else
     h2 Your Cart is empty
