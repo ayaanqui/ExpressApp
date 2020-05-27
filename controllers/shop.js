@@ -57,30 +57,27 @@ exports.getCart = (req, res, next) => {
 exports.postCart = (req, res, next) => {
   const id = req.body.id;
   let fetchedCart;
+  let quantity = 1;
 
   req.user.getCart()
     .then(cart => {
       fetchedCart = cart;
       return cart.getProducts({
-        where: {
-          id: id
-        }
+        where: { id: id }
       });
     })
     .then(([product]) => {
-      let quantity = 1;
       if (product) {
-        // If the product already exists in the cart,
-        // Just increment the quantity of the product
-        // ...
+        const oldQuantity = product.cartItem.quantity;
+        quantity = oldQuantity + 1;
+        return product;
       }
-      return Product.findByPk(id)
-        .then(product => {
-          return fetchedCart.addProduct(product, {
-            through: { quantity: quantity }
-          });
-        })
-        .catch(err => console.log(err));
+      return Product.findByPk(id);
+    })
+    .then(product => {
+      return fetchedCart.addProduct(product, {
+        through: { quantity: quantity }
+      });
     })
     .then(() => {
       res.redirect('/cart');
