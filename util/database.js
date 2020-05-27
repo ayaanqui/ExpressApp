@@ -2,9 +2,9 @@ const Sequelize = require('sequelize');
 const password = require('./password');
 
 const sequelize = new Sequelize(
-  'node-complete',
+  'expressapp',
   'root',
-  password.password,
+  password,
   {
     dialect: 'mysql',
     host: 'localhost'
