@@ -87,10 +87,15 @@ exports.postCart = (req, res, next) => {
 
 exports.postCartDelete = (req, res, next) => {
   const id = req.body.id;
-  Product.find(id, product => {
-    Cart.deleteProduct(id, product.price);
-    res.redirect('/cart');
-  });
+  req.user.getCart()
+    .then(cart => {
+      return cart.getProducts({ where: { id: id } });
+    })
+    .then(([product]) => {
+      return product.cartItem.destroy();
+    })
+    .then(result => res.redirect('/cart/'))
+    .catch(err => console.log(err));
 };
 
 exports.getCheckout = (req, res, next) => {
