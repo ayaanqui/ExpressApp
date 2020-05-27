@@ -6,7 +6,7 @@ block content
       each product in products
         li 
           | #{product.title} 
-          b x#{product.qty}
+          b x#{product.cartItem.quantity}
           form(action="/cart-delete-item", method="post")
             button.btn(type="submit", style="margin-left: 15px") Delete
             input(type="hidden", name="id", value=`${product.id}`)
