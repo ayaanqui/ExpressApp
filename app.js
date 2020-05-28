@@ -4,7 +4,7 @@ const app = express();
 const bodyParser = require("body-parser");
 
 // MongoDB
-const mongoConnect = require('./util/database');
+const mongoConnect = require('./util/database').mongoConnect;
 
 // Pug templating engine
 app.set('view engine', 'pug');
@@ -18,8 +18,8 @@ const path = require("path");
 
 // Import routes
 const errors = require('./controllers/errors');
-// const adminRoutes = require("./routes/admin");
-// const shopRoutes = require("./routes/shop");
+const adminRoutes = require("./routes/admin");
+const shopRoutes = require("./routes/shop");
 
 /** Middleware */
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -31,17 +31,19 @@ app.use((req, res, next) => {
   //     next();
   //   })
   //   .catch(err => console.log(err));
+  next();
 });
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Register routes
-// app.use('/admin', adminRoutes);
-// app.use(shopRoutes);
+app.use('/admin', adminRoutes);
+app.use(shopRoutes);
 app.use(errors.get404);
 
-mongoConnect((client) => {
-  console.log(client);
-  app.listen(3000);
+mongoConnect(() => {
+  const port = 3000;
+  console.log(`\n\nServer running at localhost:${port}\n`)
+  app.listen(port);
 });

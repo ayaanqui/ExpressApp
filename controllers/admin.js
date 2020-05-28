@@ -9,20 +9,15 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const data = req.body;
-  req.user
-    .createProduct({
-      title: data.title,
-      price: data.price,
-      imageUrl: data.imageUrl,
-      description: data.description
-    })
+  const product = new Product(data.title, data.price, data.description, data.imageUrl);
+  product.save()
     .then(result => {
       res.redirect('/');
     })
     .catch(err => console.log(err));
 };
 
-exports.getEditProduct = (req, res, next) => {
+/* exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit;
   if (!editMode)
     return res.redirect('/admin/products');
@@ -84,4 +79,4 @@ exports.getProducts = (req, res, next) => {
       });
     })
     .catch(err => console.log(err));
-};
+}; */

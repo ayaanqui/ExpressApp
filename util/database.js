@@ -1,17 +1,26 @@
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 
-const mongoConnect = (callback) => {
+let _db;
+
+const mongoConnect = callback => {
   const password = require('./password');
-  MongoClient.connect(`mongodb+srv://ayaanqui:${password}@learning-bhblw.mongodb.net/test?retryWrites=true&w=majority`)
-    .then(result => {
-      console.log("Connected!");
-      callback(result);
+  MongoClient.connect(`mongodb+srv://ayaanqui:${password}@learning-bhblw.mongodb.net/expressapp?retryWrites=true&w=majority`)
+    .then(client => {
+      _db = client.db();
+      callback();
     })
     .catch(err => {
       console.log("\n\n***ERROR CONNECTING TO MONGODB***");
-      console.log(err);
+      throw err;
     });
 };
 
-module.exports = mongoConnect;
+const getDb = () => {
+  if (_db)
+    return _db;
+  throw "No database found";
+}
+
+exports.mongoConnect = mongoConnect;
+exports.getDb = getDb;
