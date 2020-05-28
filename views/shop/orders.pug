@@ -4,4 +4,16 @@ block styles
   link(rel="stylesheet", href="/css/product.css")
 
 block content
-  h1 My Orders
+  if (orders.length > 0)
+    ul.cart__item-list
+      each order in orders
+        li.cart__item
+          span #{order.id} 
+          ul
+            each product in order.products
+              li
+                p 
+                  | #{product.title} 
+                  b x#{product.orderItem.quantity}
+  else
+    h2 You don't have any products yet.
