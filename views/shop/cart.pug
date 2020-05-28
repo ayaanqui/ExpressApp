@@ -13,5 +13,11 @@ block content
           form(action="/cart-delete-item", method="post")
             button.btn.danger(type="submit", style="margin-left: 15px") Delete
             input(type="hidden", name="id", value=`${product.id}`)
+    br
+    hr
+    br
+    .centered
+      form(action="/create-order", method="post")
+        button.btn(type="submit") Order Now!
   else
     h2 Your Cart is empty
