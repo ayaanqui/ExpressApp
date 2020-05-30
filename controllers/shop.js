@@ -34,7 +34,7 @@ exports.getProduct = (req, res, next) => {
         product: product,
       });
     })
-    .catch(err => console.log(err));
+    .catch(_ => next()); // 404 if we catch an error
 };
 
 exports.getCart = (req, res, next) => {
