@@ -16,31 +16,18 @@ app.set('views', 'views');
 
 const path = require("path");
 
-// Import routes
-const errors = require('./controllers/errors');
-const adminRoutes = require("./routes/admin");
-const shopRoutes = require("./routes/shop");
-
 /** Middleware */
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
-  // User.findByPk(1)
-  //   .then(user => {
-  //     req.user = user;
-  //     next();
-  //   })
-  //   .catch(err => console.log(err));
   next();
 });
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Register routes
-app.use('/admin', adminRoutes);
-app.use(shopRoutes);
-app.use(errors.get404);
+// Routes
+app.use(require('./routes/routes'));
 
 mongoConnect(() => {
   const port = 3000;
