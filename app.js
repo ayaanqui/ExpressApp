@@ -41,11 +41,6 @@ app.set('views', 'views');
 
 const path = require("path");
 
-// Import routes
-const adminRoutes = require("./routes/admin");
-const shopRoutes = require("./routes/shop");
-const errors = require('./controllers/errors');
-
 /** Middleware */
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -61,9 +56,8 @@ app.use((req, res, next) => {
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/admin', adminRoutes);
-app.use(shopRoutes);
-app.use(errors.get404);
+// Routes
+app.use(require('./routes/routes'));
 
 sequelize
   // .sync({ force: true })
