@@ -9,11 +9,6 @@ const mongoConnect = require('./util/database').mongoConnect;
 // Pug templating engine
 app.set('view engine', 'pug');
 
-// Tells express where to look for views
-// in our case we look at the directory (default)
-// in the ./views/ folder
-app.set('views', 'views');
-
 const path = require("path");
 
 /** Middleware */
