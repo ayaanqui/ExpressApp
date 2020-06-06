@@ -17,7 +17,7 @@ exports.postAddProduct = (req, res, next) => {
     .catch(err => console.log(err));
 };
 
-/* exports.getEditProduct = (req, res, next) => {
+exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit;
   if (!editMode)
     return res.redirect('/admin/products');
@@ -69,8 +69,7 @@ exports.postDeleteProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  req.user
-    .getProducts()
+  Product.fetchAll()
     .then(products => {
       res.render('admin/products', {
         products: products,
@@ -79,4 +78,4 @@ exports.getProducts = (req, res, next) => {
       });
     })
     .catch(err => console.log(err));
-}; */
+};

@@ -26,6 +26,6 @@ app.use(require('./routes/routes'));
 
 mongoConnect(() => {
   const port = 3000;
-  console.log(`\n\nServer running at localhost:${port}\n`)
+  console.log(`\n\nServer running at http://localhost:${port}/\n`)
   app.listen(port);
 });
