@@ -10,7 +10,7 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const data = req.body;
-  const product = new Product(data.title, data.price, data.description, data.imageUrl);
+  const product = new Product(null, data.title, data.price, data.description, data.imageUrl);
   product.save()
     .then(result => {
       res.redirect('/');
@@ -20,7 +20,7 @@ exports.postAddProduct = (req, res, next) => {
 
 exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit;
-  console.log(editMode);
+
   if (!editMode || editMode === "false")
     return res.redirect('/admin/products');
 
