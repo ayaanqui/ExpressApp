@@ -30,7 +30,7 @@ block content
           | #{product.description}
     
     if (editing)
-      input(type="hidden", name="id", value=`${product.id}`)
+      input(type="hidden", name="id", value=`${product._id}`)
 
     button.btn(type="submit")
       if !editing 
