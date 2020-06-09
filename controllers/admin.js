@@ -1,3 +1,4 @@
+const mongodb = require('mongodb');
 const Product = require('../models/product');
 
 exports.getAddProduct = (req, res, next) => {
@@ -19,17 +20,13 @@ exports.postAddProduct = (req, res, next) => {
 
 exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit;
-  if (!editMode)
+  console.log(editMode);
+  if (!editMode || editMode === "false")
     return res.redirect('/admin/products');
 
   const id = req.params.id;
-  req.user
-    .getProducts({
-      where: {
-        id: id
-      }
-    })
-    .then(([product]) => {
+  Product.findByPk(id)
+    .then(product => {
       if (!product)
         return res.redirect('/admin/products');
 
@@ -48,11 +45,14 @@ exports.postEditProduct = (req, res, next) => {
   const id = body.id;
   Product.findByPk(id)
     .then(product => {
-      product.title = body.title;
-      product.price = body.price;
-      product.imageUrl = body.imageUrl;
-      product.description = body.description;
-      return product.save();
+      const updatedProduct = new Product(
+        new mongodb.ObjectId(id),
+        body.title,
+        body.price,
+        body.description,
+        body.imageUrl
+      );
+      return updatedProduct.save();
     })
     .then(() => res.redirect(`/products/${id}`))
     .catch(err => console.log(err));
