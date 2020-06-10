@@ -3,7 +3,7 @@ const getDb = require('../util/database').getDb;
 
 class Product {
   constructor(id, title, price, description, imageUrl) {
-    this._id = new mongodb.ObjectId(id);
+    this._id = (id !== null) ? new mongodb.ObjectId(id) : null;
     this.title = title;
     this.price = price;
     this.description = description;
@@ -33,9 +33,19 @@ class Product {
   }
 
   static findByPk(id) {
-    return getDb().collection('products').find({ _id: mongodb.ObjectID(id) })
+    return getDb().collection('products')
+      .find({ _id: mongodb.ObjectID(id) })
       .next()
       .then(product => product)
+      .catch(err => console.log(err));
+  }
+
+  static deleteByPk(id) {
+    return getDb().collection('products')
+      .deleteOne({
+        _id: new mongodb.ObjectId(id)
+      })
+      .then(_ => console.log("Product deleted!"))
       .catch(err => console.log(err));
   }
 }
