@@ -1,4 +1,3 @@
-const mongodb = require('mongodb');
 const Product = require('../models/product');
 
 exports.getAddProduct = (req, res, next) => {
@@ -46,7 +45,7 @@ exports.postEditProduct = (req, res, next) => {
   Product.findByPk(id)
     .then(product => {
       const updatedProduct = new Product(
-        new mongodb.ObjectId(id),
+        id,
         body.title,
         body.price,
         body.description,
