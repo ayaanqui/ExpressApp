@@ -19,9 +19,9 @@ app.use((req, res, next) => {
   User.findByPk("5ee1a10b741aac8ec70b36c2")
     .then(user => {
       req.user = user;
+      next();
     })
     .catch(err => console.log(err));
-  next();
 });
 
 // Static files
